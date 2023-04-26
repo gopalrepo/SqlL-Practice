@@ -1,0 +1,24 @@
+create table te (a number);
+insert into te select level*1 from dual connect by level <=100;
+drop table tr;
+create table tn (b number);
+insert into tn select level*1 from dual connect by level <=100;
+delete from tn where b <=50;
+select * from tn;
+select * from te;
+select a from tn,te ; //cross join 500 count
+select a from tn natural join   te; // cross join 500 count
+
+ select a from tn  left join  te on te.a = tn.b;
+ // depends on left side table matched and unmatched values  left side table if te left =count 50
+  select a from te  left join  tn on te.a = tn.b;
+  // depends on left side table matched and unmatched values  left side table if tn left =count 100 matched 50+ unmatched 50  te has 100 values
+   select a from te  right join  tn on te.a = tn.b;
+   //depends on right side table matched and unmatched values right side if tn right =count 50 matched 50+ unmatched 50  tn has 50 values
+   select a from tn  right join  te on te.a = tn.b;
+   //depends on right side table matched and unmatched values  right side if te right =count 100 matched 50+ unmatched 50  tn has 50 values
+ select a from tn inner join te on te.a = tn.b;  
+ // matche drecords only 50
+ select a from te full outer join tn on te.a = tn.b; 
+ // both matched   both table 50 and un matched  both table  50 total values  count  100
+ opl
